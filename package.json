@@ -1,0 +1,32 @@
+{
+  "name": "vue-adal",
+  "version": "1.0.0-alpha-1",
+  "description": "Vue plugin for using Azure Active Directory",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/survirtual/vue-adal.git"
+  },
+  "keywords": [
+    "vue",
+    "auth",
+    "adal",
+    "aad"
+  ],
+  "author": "survirtual",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/survirtual/vue-adal/issues"
+  },
+  "homepage": "https://github.com/survirtual/vue-adal#readme",
+  "devDependencies": {
+    "adal-angular": "^1.0.16",
+    "async": "^2.6.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1",
+    "standard": "^11.0.0"
+  }
+}
