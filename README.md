@@ -1,8 +1,17 @@
 # Vue Adal
 
-Vue Adal is a plugin for Vue to help with using the Azure Active Directory.
+Vue Adal is a plugin for [Vue.js](https://vuejs.org/) to help with using Azure Active Directory.
 
 Check the [sample](/sample) folder for a usage example.
+
+## Installation
+```code
+yarn add vue-adal
+```
+OR
+```code
+npm install vue-adal
+```
 ## Basic Usage
 
 ```javascript
