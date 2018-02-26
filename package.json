@@ -1,6 +1,6 @@
 {
   "name": "vue-adal",
-  "version": "1.0.0-alpha-2",
+  "version": "1.0.0-alpha-3",
   "description": "Vue plugin for using Azure Active Directory",
   "main": "src/index.js",
   "scripts": {
@@ -22,9 +22,11 @@
     "url": "https://github.com/survirtual/vue-adal/issues"
   },
   "homepage": "https://github.com/survirtual/vue-adal#readme",
-  "devDependencies": {
+  "dependencies": {
     "adal-angular": "^1.0.16",
-    "async": "^2.6.0",
+    "async": "^2.6.0"
+  },
+  "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.0.1",
     "standard": "^11.0.0"
