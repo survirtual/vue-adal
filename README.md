@@ -48,6 +48,99 @@ new Router({
 })
 ```
 
+### Getting user Information
+
+After signing in, get access to the user as follows:
+
+```javascript
+import { AuthenticationContext } from 'vue-adal' // This will be populated with a valid context after initialization
+
+...
+const profile = AuthenticationContext.user.profile
+...
+```
+
+## Getting Access to a Resource
+
+After configuring Vue Adal, you'll still need to get a token to a resource.  
+
+***Important:*** your Azure application must be configured to allow the oauth2ImplicitFlow in the manifest, like so:
+![implicit flow](/resources/implicit-flow.png "Implicit Flow")
+
+### Axios HTTP Client / Interceptor
+
+Vue Adal provides a convenient and automated way to do that with an axios http client, called AxiosAuthHttp.  It configures an interceptor the auto-acquires tokens and will retry requests after a 401 and another attempt to get a token.
+
+Here is an example:
+
+```javascript
+import axios from 'axios'
+import { default as Adal, AxiosAuthHttp } from 'vue-adal'
+
+...
+Vue.use({
+  install (vue, opts = {}) {
+    // Configures an axios http client with a interceptor to auto-acquire tokens
+    vue.prototype.$graphApi = AxiosAuthHttp.createNewClient({
+      // Required Params
+      axios: axios,
+      resourceId: graphApiResource, // Resource id to get a token against
+
+      // Optional Params
+      router: router, // Enables a router hook to auto-acquire a token for the specific resource
+
+      baseUrl: graphApiBase, // Base url to configure the client with
+
+      onTokenSuccess (http, context) { // Token success hook
+        // When an attempt to retrieve a token is successful, this will get called.
+        // This enables modification of the client after a successful call.
+        if (context.user) {
+          // Setup the client to talk with the Microsoft Graph API
+          http.defaults.baseURL = `${graphApiBase}/${context.user.profile.tid}`
+        }
+      }
+    })
+  }
+})
+...
+
+```
+Take a look at the sample for more details.
+
+
+## Manually getting a token
+
+If you'd like to get a token yourself, use the acquireToken command on the Authentication context:
+
+```javascript
+import { AuthenticationContext } from 'vue-adal' // This will be populated with a valid context after initialization
+
+...
+  AuthenticationContext.acquireToken(resource, (err, token) => {
+    if (err) {
+      let errCode = err.split(':')[0]
+      switch (errCode) {
+        case 'AADSTS50058': // Need to prompt for user sign in
+          AuthenticationContext.login()
+          break
+        case 'AADSTS65001': // Token is invalid; grab a new one
+          AuthenticationContext.acquireTokenRedirect(resource)
+          break
+        case 'AADSTS16000': // No Access
+        default:
+          // Need a pop-up forcing a login
+          AuthenticationContext.login()
+          break
+      }
+      return
+    }
+    const headers = {
+      'Authorization': `BEARER ${token}`
+    }
+  })
+...
+```
+
 ## Route Hooks
 
 If you pass in a router object as an option in Vue Adal, it will configure a global hook before each route allowing for route meta tags around authentication and roles.
@@ -102,4 +195,3 @@ If you pass in a router object as an option in Vue Adal, it will configure a glo
 ```html
 <div v-if="$adal.checkRoles(['Admin'])">You are an admin!</div>
 ```
-

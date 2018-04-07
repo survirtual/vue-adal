@@ -24,11 +24,26 @@ export default {
       msg: "Signing in..."
     }
   },
-  created () {
+  async created () {
     if (this.$adal.isAuthenticated()) {
       this.msg = "Hello, " + this.$adal.user.profile.roles + " " + this.$adal.user.profile.name 
+
+      let userInfo = await this.getUserInfo()
+      this.msg += '. It looks like your mail nickname is ' + userInfo.mailNickname + ' according to the Graph API'
     } else {
       this.msg = "Please sign in"
+    }
+  },
+
+  methods: {
+    async getUserInfo () {
+      let res = await this.$graphApi.get(`me`, {
+        params: {
+          'api-version': 1.6
+        }
+      })
+      console.log(res)
+      return res.data
     }
   }
 }
