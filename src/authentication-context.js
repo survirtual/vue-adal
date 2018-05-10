@@ -177,6 +177,9 @@ class AuthenticationContext {
     if (!this.isAuthenticated()) {
       return false
     }
+    if (!this.user.profile.roles) {
+      return false
+    }
     if (typeof roles === 'string') {
       roles = [roles]
     }
