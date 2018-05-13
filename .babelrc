@@ -1,0 +1,19 @@
+{
+  "presets": [["env", {
+      "targets": {
+        "chrome": 52
+      }
+    }]
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "@": "./src/",
+        "@test": "./test"
+      }
+    }]
+  ],
+  "sourceMaps": true,
+  "retainLines": false
+}
