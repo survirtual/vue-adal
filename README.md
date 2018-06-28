@@ -91,13 +91,18 @@ Vue.use({
 
       baseUrl: graphApiBase, // Base url to configure the client with
 
-      onTokenSuccess (http, context) { // Token success hook
+      onTokenSuccess (http, context, token) { // Token success hook
         // When an attempt to retrieve a token is successful, this will get called.
         // This enables modification of the client after a successful call.
         if (context.user) {
           // Setup the client to talk with the Microsoft Graph API
           http.defaults.baseURL = `${graphApiBase}/${context.user.profile.tid}`
         }
+      },
+
+      onTokenFailure (error) { // Token failure hook
+        // When an attempt to retrieve a token is not successful, this will get called.
+        console.log(error)
       }
     })
   }
