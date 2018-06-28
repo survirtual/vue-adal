@@ -17,11 +17,11 @@ const getToken = (resource, http, cb) => {
           AuthenticationContext.login()
           break
       }
-      cb()
+      cb(new Error('Failed to acquire token'))
       return
     }
     http.defaults.headers['Authorization'] = `BEARER ${token}`
-    cb()
+    cb(null, token)
   })
 }
 
@@ -75,9 +75,15 @@ export class AxiosAuthHttp {
 
     // Set up the router hooks for this resource
     options.router.beforeEach((to, from, next) => {
-      getToken(options.resourceId, http, () => {
+      getToken(options.resourceId, http, (err, token) => {
+        if (err) {
+          if (options.onTokenFailure instanceof Function) {
+            options.onTokenFailure(err)
+          }
+          return
+        }
         if (options.onTokenSuccess instanceof Function) {
-          options.onTokenSuccess(http, AuthenticationContext)
+          options.onTokenSuccess(http, AuthenticationContext, token)
         }
         next()
       })
