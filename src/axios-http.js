@@ -80,6 +80,7 @@ export class AxiosAuthHttp {
           if (options.onTokenFailure instanceof Function) {
             options.onTokenFailure(err)
           }
+          next()
           return
         }
         if (options.onTokenSuccess instanceof Function) {
