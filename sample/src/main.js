@@ -6,7 +6,7 @@ import router from './router'
 
 Vue.config.productionTip = false
 const graphApiBase = `https://graph.windows.net`
-const graphApiResource = '00000002-0000-0000-c000-00000000000'
+const graphApiResource = '00000002-0000-0000-c000-000000000000'
 
 Vue.use(Adal, {
   config: {
