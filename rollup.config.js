@@ -18,9 +18,9 @@ export default {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      'presets': [['env', {
+      'presets': [['@babel/preset-env', {
         'modules': false,
-        'browsers': [
+        'targets': [
           'Chrome >= 52',
           'FireFox >= 44',
           'Safari >= 7',
@@ -30,7 +30,6 @@ export default {
       }]
       ],
       'plugins': [
-        'external-helpers',
         ['module-resolver', {
           'root': ['./src'],
           'alias': {
