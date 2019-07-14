@@ -1,8 +1,13 @@
 {
-  "presets": [["env", {
-      "targets": {
-        "chrome": 52
-      }
+  "presets": [["@babel/preset-env", {
+      "modules": false,
+      "targets": [
+        "Chrome >= 52",
+        "FireFox >= 44",
+        "Safari >= 7",
+        "Explorer 11",
+        "last 4 Edge versions"
+      ]
     }]
   ],
   "plugins": [
@@ -14,6 +19,6 @@
       }
     }]
   ],
-  "sourceMaps": true,
+  "sourceMaps": false,
   "retainLines": false
 }
