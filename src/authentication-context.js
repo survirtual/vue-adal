@@ -34,6 +34,8 @@ class AuthenticationContext {
    * @param {options}  options - Configuration options for AuthenticationContext
    */
   constructor (opts) {
+    var _this = this;
+
     // Initialization to options or default
     this.config = opts.config || {
       tenant: 'your aad tenant',
@@ -65,8 +67,8 @@ class AuthenticationContext {
       })
       if (this.config.endpoints) {
         Object.keys(this.config.endpoints).forEach(function (key, index) {
-          const resource = this.config.endpoints[key]
-          this.acquireToken(resource, (err, token) => {
+          const resource = _this.config.endpoints[key]
+          _this.acquireToken(resource, (err, token) => {
             if (err) {
               console.log('Could not get token')
             }
@@ -79,7 +81,7 @@ class AuthenticationContext {
       // Initialize the router hooks
       opts.router.beforeEach((to, from, next) => {
         if (opts.globalAuth || to.matched.some(record => record.meta.requireAuth)) {
-          if (this.isAuthenticated()) {
+          if (_this.isAuthenticated()) {
             // Authenticated, make sure roles are okay
             let checkRoles = []
             if (to.matched.some(record => {
@@ -89,7 +91,7 @@ class AuthenticationContext {
               }
               return false
             })) {
-              if (this.checkRoles(checkRoles)) {
+              if (_this.checkRoles(checkRoles)) {
                 // Authorized to see the page
                 next()
               } else {
@@ -101,7 +103,7 @@ class AuthenticationContext {
               next()
             }
           } else {
-            this.login()
+            _this.login()
           }
         } else {
           next()
