@@ -57,6 +57,7 @@ export class AxiosAuthHttp {
             method: config.method,
             url: config.url,
             data: config.data,
+            params: config.params,
             headers: {
               'Accept': config.headers['Accept'],
               'Authorization': config.headers['Authorization'],
