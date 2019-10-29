@@ -176,7 +176,7 @@ If you pass in a router object as an option in Vue Adal, it will configure a glo
       name: 'secretRoles',
       component: MySecretRolesComponent,
       meta: {
-        requireAuth: true
+        requireAuth: true,
         // Much match at least one of these roles
         requireRoles: [
           'TheMan',
