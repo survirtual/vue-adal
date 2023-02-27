@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.2",
-    "@vue/cli-plugin-e2e-cypress": "^3.9.0",
+    "@vue/cli-plugin-e2e-cypress": "^5.0.8",
     "@vue/cli-plugin-eslint": "^3.9.2",
     "@vue/cli-service": "^3.9.2",
     "@vue/eslint-config-standard": "^3.0.5",
